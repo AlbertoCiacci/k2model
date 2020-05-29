@@ -8,7 +8,7 @@
 #
 #   Generate a graph instance and assign it to a free variable:
 #
-#   G = ba(m,n,initial_graph)
+#   G = PA_graph(m,n,initial_graph)
 #
 #   Graph instance must be initialised with variables m, n and seed:
 #
@@ -181,6 +181,7 @@ class PA_graph:
     def k2_vs_k1(self,plot=True):
         """
         Calculate \\tilde{\phi}(k,1) for k2 model, see Eq.(8) in [Falkenberg et al., PRR, 2020]
+        Only applicable for k2 model, n=2.
 
         Parameters
         ----------
