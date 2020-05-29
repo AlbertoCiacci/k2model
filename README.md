@@ -1,7 +1,7 @@
 K2 Model Implementation
 =======================
 
-K2 Model based on preferential attachment proportional to 2nd degree connections.
+K2 Model based on preferential attachment proportional to 2nd degree connections. 
 
 Max Falkenberg, mff113@ic.ac.uk
 
@@ -13,6 +13,8 @@ Reference: Falkenberg et al., Identifying Time Dependence in Network Growth, Phy
 
 Instructions for use.
 ---------------------
+
+Python3 implementation.
 
 Import k2model and generate a graph instance and assign it to a free variable:
 
