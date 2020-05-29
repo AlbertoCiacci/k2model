@@ -1,5 +1,6 @@
 #K2 Model based on preferential attachment proportional to 2nd degree connections.
 #Max Falkenberg, mff113@ic.ac.uk
+#MIT License. Please reference below publication if used for research purposes.
 #Reference: Falkenberg et al., Identifying Time Dependence in Network Growth, Physical Review Research, 2020.
 #
 ################################################################################
