@@ -14,9 +14,10 @@ Reference: Falkenberg et al., Identifying Time Dependence in Network Growth, Phy
 Instructions for use.
 ---------------------
 
-Generate a graph instance and assign it to a free variable:
+Import k2model and generate a graph instance and assign it to a free variable:
 
-    G = PA_graph(m,n,initial_graph)
+    import k2model as k2
+    G = k2.PA_graph(m,n,initial_graph)
     
 Graph instance must be initialised with variables m, n and seed:
 
