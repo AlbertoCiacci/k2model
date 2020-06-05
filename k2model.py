@@ -162,7 +162,10 @@ class PA_graph:
         y = y.astype('float')
         y /= np.sum(y) #Convert histogram into probability distribution
         if plot:
-            plt.plot(x,y,ls='',marker='.',label = 'k2 model simulations')
+            if self.n==2:
+                plt.plot(x,y,ls='',marker='.',label = 'k2 model simulations')
+            if self.n==1:
+                plt.plot(x, y, ls='', marker='.', label='BA model simulations')
             plt.xscale('log')
             plt.yscale('log')
             plt.plot(x,(2 * self.m * (self.m + 1)) / (x*(x+1)*(x+2)),ls='--',color = 'k',label = 'BA model theory (1st degree)') #Theory for BA model
