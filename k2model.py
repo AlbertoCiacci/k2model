@@ -51,7 +51,6 @@ import time
 class PA_graph:
     """
     Creates a preferential attachment graph object for BA model or k2 model.
-
     Attributes
     ----------
     n: 1 or 2
@@ -72,10 +71,11 @@ class PA_graph:
         Second degree of node i at index i.
     copy_prob: list
         Effective copying probability for preferential copying model at each timestep.
-
+    L_prob: list
+        p = <k2>/<k2^2>*(L(N+1)-L(N)-1) at each timestep
+        
     Methods
     -------
-
     add_nodes(N)
         Add N nodes to the network.
     degree_dist(n=1,plot=True)
@@ -87,7 +87,6 @@ class PA_graph:
     def __init__(self,m=1,n=1,initial_graph = 0):
         """
         Initialises preferential attachment graph.
-
         Parameters
         ----------
         m: int
@@ -131,18 +130,19 @@ class PA_graph:
         self.k1 = [len(i) for i in self.adjlist_k1] #1st degree of node i
         self.k2 = [len(j) for j in self.adjlist_k1] #2nd degree of node i
         self.copy_prob = [] #Stores effective copying probability at each time step analogously to preferential copying model
+        self.L_prob = [] #Stores probability p = <k>/<k^2>*(L(N+1)-L(N)-1)
+        self.sumk2 = [sum(self.k2)] #Stores sum of 2nd degrees
+        self.sumk2square = [sum([j*j for j in self.k2])] #Stores sum of squares of 2nd degrees
 
     def degree_dist(self,n=1,plot=True):
         """
         Export degree distribution for first degree if n==1 or second degree is n==2.
-
         Parameters
         ----------
         n: 1 or 2
             Degree distribution for 1st degree (observed) if n=1, or 2nd degree (influence) if n=2.
         plot: boolean
             Plot degree distribution if True.
-
         Returns
         -------
         x: ndarray
@@ -185,12 +185,10 @@ class PA_graph:
         """
         Calculate \\tilde{\phi}(k,1) for k2 model, see Eq.(8) in [Falkenberg et al., PRR, 2020]
         Only applicable for k2 model, n=2.
-
         Parameters
         ----------
         plot: boolean
             Plot cumulative relative attachment kernel if True.
-
         Returns
         -------
         x: ndarray
@@ -229,7 +227,6 @@ class PA_graph:
     def add_nodes(self, N):
         """
         Adds N nodes to the network, one at a time, each adding m edges.
-
         Parameters
         ----------
         N: int
@@ -259,8 +256,12 @@ class PA_graph:
                         new_targets_k2 += [k] #Add target node to second degree list of new node
 
             self.k2.append(len(new_targets_k2))
+            self.sumk2.append(self.sumk2[-1]+2*len(new_targets_k2))
+            self.sumk2square.append(self.sumk2square[-1]+len(new_targets_k2)**2)
             for j in new_targets_k2:
                 self.k2[j] += 1 #Second degree increases by 1 for each target node
+                self.sumk2square[-1] += 2*self.k2[j]-1
+            self.L_prob.append(self.sumk2[-2]/self.sumk2square[-2]*(len(new_targets_k2)-1)) # p = <k>/<k^2>*(L(N+1)-L(N)-1)
 
             if self.m != 1: #If m>1, considers nodes which are connected by a path of length two through the new node after attachment
                 for j in range(self.m - 1):
