@@ -47,7 +47,6 @@ import scipy.optimize as opt
 from operator import add
 import time
 
-
 class PA_graph:
     """
     Creates a preferential attachment graph object for BA model or k2 model.
@@ -73,6 +72,10 @@ class PA_graph:
         Effective copying probability for preferential copying model at each timestep.
     L_prob: list
         p = <k2>/<k2^2>*(L(N+1)-L(N)-1) at each timestep
+    sumk2: list
+        sum of k2 over all nodes at each timestep
+    sumk2square: list
+        sum of squares of k2 over all nodes at each timestep
         
     Methods
     -------
