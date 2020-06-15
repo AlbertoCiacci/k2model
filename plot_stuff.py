@@ -5,7 +5,7 @@ realisations=1000
 copy_prob = np.zeros(N)
 L_prob = np.zeros(N)
 for i in range(realisations):
-    G = PA_graph(n=2)
+    G = k2model.PA_graph(n=2)
     G.add_nodes(N)
     copy_prob += np.array(G.copy_prob)
     L_prob += np.array(G.L_prob)
